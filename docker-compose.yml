@@ -1,20 +1,54 @@
+version: "3.9"
+
 services:
   rabbitmq:
     image: rabbitmq:3-management
+    container_name: myproject-rabbitmq
     ports:
       - "5672:5672"
       - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 10s
+      retries: 5
+      start_period: 10s
+    user: "1000:1000"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
 
   redis:
     image: redis:7
+    container_name: myproject-redis
     ports:
       - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+    user: "1000:1000"
+    volumes:
+      - redis_data:/data
 
   worker:
-    build: .
+    build:
+      context: .
+      args:
+        WORKDIR: ${WORKDIR:-/app}
+    container_name: myproject-worker
     command: celery -A app.celery_app worker --loglevel=info
-    volumes:
-      - .:/app
     depends_on:
-      - rabbitmq
-      - redis
+      rabbitmq:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    env_file:
+      - .env
+    user: "1000:1000"
+
+volumes:
+  rabbitmq_data:
+  redis_data:
