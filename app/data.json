@@ -1,0 +1,19 @@
+{
+  "user:1": {"name": "Alice", "age": 25, "email": "alice@example.com", "roles": ["admin", "user"]},
+  "user:2": {"name": "Bob", "age": 30, "email": "bob@example.com", "roles": ["user"]},
+  "user:3": {"name": "Charlie", "age": 22, "email": "charlie@example.com", "roles": ["moderator", "user"]},
+  "user:4": {"name": "Diana", "age": 28, "email": "diana@example.com", "roles": ["user"]},
+  "user:5": {"name": "Eve", "age": 35, "email": "eve@example.com", "roles": ["admin"]},
+  "settings:theme": "dark",
+  "settings:language": "en",
+  "settings:notifications": {"email": true, "sms": false},
+  "products:1": {"name": "Laptop", "price": 1200.5, "stock": 10},
+  "products:2": {"name": "Mouse", "price": 25.99, "stock": 100},
+  "products:3": {"name": "Keyboard", "price": 45.5, "stock": 50},
+  "orders:1001": {"user_id": 1, "products": [{"id": 1, "qty": 1}, {"id": 2, "qty": 2}], "status": "shipped"},
+  "orders:1002": {"user_id": 2, "products": [{"id": 3, "qty": 1}], "status": "pending"},
+  "logs:2026-04-01": ["Started process", "Processed 10 items", "Finished successfully"],
+  "features:beta": ["feature_x", "feature_y"],
+  "metrics:users_active": 532,
+  "metrics:sales_today": 12420.75
+}
